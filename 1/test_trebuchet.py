@@ -27,6 +27,8 @@ data_3 = {
     "7pqrstsixteen": "7pqrst6teen",
 }
 
+data_reddit = {"eighthree": 83, "sevenine": 79}
+
 def test_get_calibration():
     for input, expected, in data_1.items():
         assert expected == trebuchet.get_calibration(input)
@@ -49,3 +51,14 @@ def test_get_calibration_2():
 def test_solution_2():
     expected = sum(data_2.values())
     assert expected == trebuchet.solve_2(data_2.keys())
+
+# source: https://www.reddit.com/r/adventofcode/comments/1884fpl/2023_day_1for_those_who_stuck_on_part_2/
+def test_words_to_num_extra():
+
+    for input, expected in data_reddit.items():
+        result = trebuchet.words_to_num(input)
+        assert expected == result
+
+def test_solution_2_extra():
+    expected = sum(data_reddit.values())
+    assert expected == trebuchet.solve_2(data_reddit.keys())
