@@ -2,9 +2,6 @@
 import string
 import re
 
-with open('input.txt', 'r') as f:
-    data = f.readlines()
-
 # part 1
 def get_calibration(line: str) -> int:
     # replace all letters by none to keep only numbers
@@ -15,13 +12,15 @@ def get_calibration(line: str) -> int:
     num = num[0] + num[-1]
     return int(num)
 
-def solve_1():
+def solve_1(data: list[str]) -> int:
     sum = 0
     for line in data:
         sum += get_calibration(line)
-    print(f"First answer: {sum}")
+    
+    return sum
 
 # part 2
+
 numbers_helper = {
     'one': 1,
     'two': 2,
@@ -40,10 +39,10 @@ numbers_helper = {
 #     line = line.replace(i, str(j))
 # maybe regex will treat in order
 
-regex = re.compile("|".join(i for i in numbers_helper))
-print(f"Regex use to find literal numbers: {regex}")
+def solve_2(data: list[str]) -> int:
+    regex = re.compile("|".join(i for i in numbers_helper))
+    print(f"Regex use to find literal numbers: {regex}")
 
-def solve_2():
     sum = 0
     for line in data:
         result = regex.findall(line) # return a table of matching sub strings
@@ -53,9 +52,12 @@ def solve_2():
 
         sum += get_calibration(line)
 
-    print(f"Second answer: {sum}")
+    return sum
 
 
 if __name__ == "__main__":
-    solve_1()
-    solve_2()
+    with open('input.txt', 'r') as f:
+        data = f.readlines()
+
+    print(f"First answer: {solve_1(data)}")
+    print(f"Second answer: {solve_2(data)}")
