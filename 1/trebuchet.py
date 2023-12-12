@@ -32,25 +32,28 @@ numbers_helper = {
     'eight': 8,
     'nine': 9,
 }
+regex = re.compile("|".join(i for i in numbers_helper))
 
 # naïve approach does not solve this case
 # eightwothree
 # for i, j in numbers_helper.items():
 #     line = line.replace(i, str(j))
 # maybe regex will treat in order
+def words_to_num(line: str) -> str:
+    result = regex.findall(line) # return a table of matching sub strings
+    for substring in result:
+        # replace only one occurence by one to get numbers in order
+        line = line.replace(substring, str(numbers_helper[substring]), 1)
+
+    return line
 
 def solve_2(data: list[str]) -> int:
-    regex = re.compile("|".join(i for i in numbers_helper))
-    print(f"Regex use to find literal numbers: {regex}")
-
     sum = 0
     for line in data:
-        result = regex.findall(line) # return a table of matching sub strings
-        for substring in result:
-            # replace only one occurence by one to get numbers in order
-            line = line.replace(substring, str(numbers_helper[substring]), 1)
-
-        sum += get_calibration(line)
+        line = words_to_num(line)
+        calib = get_calibration(line)
+        print(line ,calib)
+        sum +=  calib
 
     return sum
 
@@ -59,5 +62,6 @@ if __name__ == "__main__":
     with open('input.txt', 'r') as f:
         data = f.readlines()
 
+    print(f"Regex use to find literal numbers: {regex}")
     print(f"First answer: {solve_1(data)}")
     print(f"Second answer: {solve_2(data)}")
