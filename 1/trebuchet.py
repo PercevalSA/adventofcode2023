@@ -40,10 +40,14 @@ regex = re.compile("|".join(i for i in numbers_helper))
 #     line = line.replace(i, str(j))
 # maybe regex will treat in order
 def words_to_num(line: str) -> str:
-    result = regex.findall(line) # return a table of matching sub strings
-    for substring in result:
-        # replace only one occurence by one to get numbers in order
-        line = line.replace(substring, str(numbers_helper[substring]), 1)
+    result = ["1"]
+    while result:
+        result = regex.findall(line) # return a table of matching sub strings
+        for substring in result:
+            # the replacement is the number with the literal without the forst letter so it does not remove overlayed numbers
+            replacement = str(numbers_helper[substring]) + substring[1:]
+            # replace only one occurence by one to get numbers in order
+            line = line.replace(substring, replacement, 1)
 
     return line
 
@@ -52,7 +56,6 @@ def solve_2(data: list[str]) -> int:
     for line in data:
         line = words_to_num(line)
         calib = get_calibration(line)
-        print(line ,calib)
         sum +=  calib
 
     return sum

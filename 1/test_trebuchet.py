@@ -18,16 +18,18 @@ data_2 = {
 }
 
 data_3 = {
-    "two1nine": "219",
-    "eightwothree": "8wo3",
-    "abcone2threexyz": "abc123xyz",
-    "xtwone3four": "x2ne34",
-    "4nineeightseven2": "49872",
-    "zoneight234": "z1ight234",
-    "7pqrstsixteen": "7pqrst6teen",
+    "two1nine": "2wo19ine",
+    "eightwothree": "8igh2wo3hree",
+    "abcone2threexyz": "abc1ne23hreexyz",
+    "xtwone3four": "x2w1ne34our",
+    "4nineeightseven2": "49ine8ight7even2",
+    "zoneight234": "z1n8ight234",
+    "7pqrstsixteen": "7pqrst6ixteen",
 }
 
-data_reddit = {"eighthree": 83, "sevenine": 79}
+data_reddit = {"eighthree": 83, "sevenine": 79, "oneight": 18}
+data_reddit_2 = {"eighthree": "8igh3hree", "sevenine": "7eve9ine", "oneight": "1n8ight"}
+
 
 def test_get_calibration():
     for input, expected, in data_1.items():
@@ -55,7 +57,7 @@ def test_solution_2():
 # source: https://www.reddit.com/r/adventofcode/comments/1884fpl/2023_day_1for_those_who_stuck_on_part_2/
 def test_words_to_num_extra():
 
-    for input, expected in data_reddit.items():
+    for input, expected in data_reddit_2.items():
         result = trebuchet.words_to_num(input)
         assert expected == result
 
