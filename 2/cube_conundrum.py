@@ -36,8 +36,20 @@ def parse_input(data: list[str]) -> dict:
     return games
 
 
+def is_possible(draw: dict) -> bool:
+    maximum = {"blue": 14, "green": 13, "red": 12}
+
+    for color in draw:
+        if draw[color] > maximum[color]:
+            return False
+
+    return True
+
+
 if __name__ == "__main__":
     with open("input.txt", "r") as f:
         data = f.readlines()
 
     games = parse_input(data)
+
+    # we need to check if all draws in a game are possible

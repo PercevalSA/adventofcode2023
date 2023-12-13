@@ -19,3 +19,21 @@ def test_parse_game():
     }
 
     assert expected == cube_conundrum.parse_input(input)
+
+
+def test_is_possible():
+    input = {"blue": 10, "green": 9, "red": 8}
+    assert cube_conundrum.is_possible(input)
+
+
+def test_is_possible_limit():
+    input = {"blue": 14, "green": 13, "red": 12}
+    assert cube_conundrum.is_possible(input)
+
+
+def test_is_possible_impossible():
+    input = {"blue": 20, "green": 21, "red": 102}
+    assert cube_conundrum.is_possible(input) is False
+
+    input_2 = {"blue": 2, "green": 21, "red": 10}
+    assert cube_conundrum.is_possible(input_2) is False
