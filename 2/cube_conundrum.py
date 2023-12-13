@@ -49,12 +49,21 @@ def game_is_possible(game: dict) -> bool:
     return True
 
 
+def get_game_number(game: str) -> int:
+    # parse "Game 43"
+    return int(game.split(" ")[-1])
+
+
 if __name__ == "__main__":
     with open("input.txt", "r") as f:
         data = f.readlines()
 
     games = parse_input(data)
+    result = 0
     for game in games:
-        print(game, game_is_possible(games[game]))
+        print(game)
+        if game_is_possible(games[game]):
+            result += get_game_number(game)
 
+    print(f"Result: {result}")
     # we need to check if all draws in a game are possible
