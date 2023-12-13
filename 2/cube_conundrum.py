@@ -25,22 +25,25 @@ def parse_input(data: list[str]) -> dict:
     games: dict = {}
     for line in data:
         game_number, line = line.split(":")
-
-        draws: dict = {}
-        for id, draw in enumerate(line.split(";")):
-            draws[id] = parse_draw(draw)
-
-        games[game_number] = draws
+        games[game_number] = [parse_draw(draw) for draw in line.split(";")]
 
     print(games)
     return games
 
 
-def is_possible(draw: dict) -> bool:
+def draw_is_possible(draw: dict) -> bool:
     maximum = {"blue": 14, "green": 13, "red": 12}
 
     for color in draw:
         if draw[color] > maximum[color]:
+            return False
+
+    return True
+
+
+def game_is_possible(game: dict) -> bool:
+    for draw in game:
+        if draw_is_possible(draw) is False:
             return False
 
     return True
@@ -51,5 +54,7 @@ if __name__ == "__main__":
         data = f.readlines()
 
     games = parse_input(data)
+    for game in games:
+        print(game, game_is_possible(games[game]))
 
     # we need to check if all draws in a game are possible

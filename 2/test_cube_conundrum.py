@@ -11,11 +11,11 @@ def test_parse_draw():
 def test_parse_game():
     input = ["Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red"]
     expected = {
-        "Game 4": {
-            0: {"blue": 6, "green": 1, "red": 3},
-            1: {"green": 3, "red": 6},
-            2: {"blue": 15, "green": 3, "red": 14},
-        }
+        "Game 4": [
+            {"blue": 6, "green": 1, "red": 3},
+            {"green": 3, "red": 6},
+            {"blue": 15, "green": 3, "red": 14},
+        ]
     }
 
     assert expected == cube_conundrum.parse_input(input)
@@ -23,17 +23,23 @@ def test_parse_game():
 
 def test_is_possible():
     input = {"blue": 10, "green": 9, "red": 8}
-    assert cube_conundrum.is_possible(input)
+    assert cube_conundrum.draw_is_possible(input) is True
+
+    input = {"blue": 7, "green": 3}
+    assert cube_conundrum.draw_is_possible(input) is True
 
 
 def test_is_possible_limit():
     input = {"blue": 14, "green": 13, "red": 12}
-    assert cube_conundrum.is_possible(input)
+    assert cube_conundrum.draw_is_possible(input) is True
 
 
 def test_is_possible_impossible():
     input = {"blue": 20, "green": 21, "red": 102}
-    assert cube_conundrum.is_possible(input) is False
+    assert cube_conundrum.draw_is_possible(input) is False
 
     input_2 = {"blue": 2, "green": 21, "red": 10}
-    assert cube_conundrum.is_possible(input_2) is False
+    assert cube_conundrum.draw_is_possible(input_2) is False
+
+    input_2 = {"green": 21, "red": 10}
+    assert cube_conundrum.draw_is_possible(input_2) is False
