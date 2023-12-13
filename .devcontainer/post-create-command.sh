@@ -2,6 +2,10 @@
 
 # install all requirements to solve all problems
 for folder in $(ls -d */);
-do 
-    python3 -m pip install -r ${folder}requirements.txt;
+do
+    requirements="${folder}requirements.txt"
+    if [ -f "${requirements}" ];
+    then
+        python3 -m pip install -r ${requirements};
+    fi
 done
