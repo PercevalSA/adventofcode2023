@@ -6,6 +6,7 @@
         "vscode": {
             "extensions": [
                 "charliermarsh.ruff",
+                "eamodio.gitlens",
                 "ms-python.isort",
                 "ms-python.mypy-type-checker",
                 "ms-python.python",
