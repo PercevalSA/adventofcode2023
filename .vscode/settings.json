@@ -1,4 +1,17 @@
 {
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "editor.rulers": [
+        90,
+        120
+    ],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+        "source.fixAll": "explicit"
+    },
+    "python.analysis.typeCheckingMode": "basic",
     "python.testing.pytestArgs": [
         "."
     ],
