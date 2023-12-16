@@ -37,6 +37,19 @@ def solve_part_1(data: list):
     return score
 
 
+# part 2
+def get_winned_cards(card: list, index: int) -> list[int]:
+    wins = count_wins(card)
+    return [index + i for i in range(1, wins)]
+
+
+def solve_part_2(data: list) -> int:
+    for i, card in iterate(data):
+        print(get_winned_cards(card, i))
+
+    return 0
+
+
 def main(file: str):
     with open(file, "r") as f:
         data = f.read()
