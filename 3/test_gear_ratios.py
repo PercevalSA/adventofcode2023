@@ -109,5 +109,7 @@ def test_get_all_numbers_with_size():
     assert num_with_size == data_sizes
 
 
-def test_main():
-    assert gear_ratios.main("3/input.txt") == 527364
+def test_solve_part_1():
+    parsed_data = gear_ratios.parse_data_as_dict(data)
+    assert gear_ratios.solve_part_1(parsed_data) == 4361
+    # assert gear_ratios.solve_part_1(data_reddit) == ?

@@ -12,6 +12,9 @@
 # default factory does not handle tuple as key
 
 
+from typing import Generator
+
+
 def parse_data_as_dict(data: str) -> dict:
     table = {}
     for y, line in enumerate(data.splitlines()):
@@ -20,7 +23,7 @@ def parse_data_as_dict(data: str) -> dict:
     return table
 
 
-def get_all_num_positions(table: dict) -> tuple[int, int]:
+def get_all_num_positions(table: dict) -> Generator:
     for i in table:
         if table[i].isnumeric():
             yield i
@@ -30,6 +33,8 @@ def get_number_len(position: tuple[int, int], table: dict) -> int:
     len = 0
     # iterate on the line and check if the char is int, increase len
     # if we find something else return the len because the nulmber has ended
+    # we use try except because we cannot levrage defaultvalue because it changes dict
+    # while we are iterating generating an error
     try:
         while table.get((position[0] + len, position[1])).isnumeric():
             len += 1
@@ -74,23 +79,46 @@ def is_part_number(surrounding: str) -> bool:
     return False
 
 
+def solve_part_1(data: dict) -> int:
+    # get all nums before we sort and extract part nums
+    all_nums = get_all_numbers_with_size(data)
+
+    # extract only part nums
+    result = 0
+    for num in all_nums:
+        num_size = get_number_len(num, data)
+        if is_part_number(extract_surroundings(num, num_size, data)):
+            result += get_number(num, num_size, data)
+
+    return result
+
+
+# PART 2
+#
+# A gear is any * symbol that is adjacent to exactly two part numbers.
+# Its gear ratio is the result of multiplying those two numbers together.
+def is_gear_ratio(position: tuple):
+    """find the numbers around the stars and return true if 2 are present"""
+    return False
+
+
+def find_gear_ratios(position: tuple):
+    return False
+
+
+def find_all_gear(table: dict) -> Generator:
+    for char in table:
+        if table.get(char) == "*":
+            yield char
+
+
 def main(file: str):
     with open(file, "r") as f:
         data = f.read()
     parsed_data = parse_data_as_dict(data)
 
-    # get all nums before we sort and extract part nums
-    all_nums = get_all_numbers_with_size(parsed_data)
-
-    # extract only part nums
-    result = 0
-    for num in all_nums:
-        num_size = get_number_len(num, parsed_data)
-        if is_part_number(extract_surroundings(num, num_size, parsed_data)):
-            result += get_number(num, num_size, parsed_data)
-
+    result = solve_part_1(parsed_data)
     print(f"Result 1: {result}")
-    return result
 
 
 if __name__ == "__main__":
