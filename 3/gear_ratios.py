@@ -30,31 +30,6 @@ def default_factory(coordinates: tuple) -> str:
     return "."
 
 
-# LEGACY
-def parse_data_as_table(data: str) -> list[list[str]]:
-    table = [[letter for letter in line] for line in data.splitlines()]
-    return table
-
-
-def number_length(num_position: int, table: list) -> int:
-    length = 0
-    while True:
-        try:
-            int(table[num_position])
-            length += 1
-            num_position += 1
-
-        except ValueError:
-            return length
-
-
-def extract_surroundings(num_position: int, table: list) -> str:
-    return ""
-
-
-# END LEGACY
-
-
 def parse_data_as_dict(data: str) -> dict:
     table = {}
     for y, line in enumerate(data.splitlines()):
@@ -63,8 +38,9 @@ def parse_data_as_dict(data: str) -> dict:
     return table
 
 
-def get_all_num_positions(table: dict) -> list[str]:
+def get_all_num_positions(table: dict) -> list[tuple]:
     for i in table:
+        print(i)
         if table[i].isnumeric():
             yield i
 
@@ -78,7 +54,20 @@ def get_number_len(position: tuple[int, int], table: dict) -> int:
     return len
 
 
-def is_part_number(position: int) -> bool:
+def extract_surroundings(position: tuple, len: int, table: dict) -> str:
+    surroundings = ""
+    for y in range(position[1] - 1, position[1] + 2):
+        for x in range(position[0] - 1, position[0] + len + 1):
+            surroundings += str(table.get((x, y)))
+
+    return surroundings
+
+
+def is_part_number(surrounding: str) -> bool:
+    for i in surrounding:
+        if not i.isnumeric() and i != ".":
+            return True
+
     return False
 
 

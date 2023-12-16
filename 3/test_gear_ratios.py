@@ -48,3 +48,20 @@ def test_number_len():
     assert gear_ratios.get_number_len((2, 2), parsed_data) == 2
     assert gear_ratios.get_number_len((3, 2), parsed_data) == 1
     assert gear_ratios.get_number_len((3, 3), parsed_data) == 0
+
+
+def test_part_number():
+    assert gear_ratios.is_part_number(".") is False
+    assert gear_ratios.is_part_number("..") is False
+    assert gear_ratios.is_part_number("4") is False
+    assert gear_ratios.is_part_number("54") is False
+    assert gear_ratios.is_part_number("......5454....5...") is False
+    assert gear_ratios.is_part_number(".4...*.5..56...1..2.") is True
+    assert gear_ratios.is_part_number(".4...*.5..56...1#..2.") is True
+    assert gear_ratios.is_part_number(".4.5445....$") is True
+
+
+def test_extract_surroundings():
+    parsed_data = gear_ratios.parse_data_as_dict(data)
+    assert gear_ratios.extract_surroundings((2, 6), 3, parsed_data) == "....+.592......"
+    assert gear_ratios.extract_surroundings((3, 8), 1, parsed_data) == "....$.64."
