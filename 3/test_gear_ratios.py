@@ -11,6 +11,22 @@ data = """467..114..
 ...$.*....
 .664.598.."""
 
+all_numbers = [467, 114, 35, 633, 617, 58, 592, 755, 664, 598]
+
+data_sizes = {
+    (0, 0): 3,
+    (5, 0): 3,
+    (2, 2): 2,
+    (6, 2): 3,
+    (0, 4): 3,
+    (7, 5): 2,
+    (2, 6): 3,
+    (6, 7): 3,
+    (1, 9): 3,
+    (5, 9): 3,
+}
+
+extracted_nums = [467, 35, 633, 617, 592, 755, 664, 598]
 
 data_reddit = """12.......*..
 +.........34
@@ -80,22 +96,14 @@ def test_get_num_position():
         # wrong test we should find all numbers and check is they are returned
 
 
-def test_get_all_numbers_with_size():
-    expected = {
-        (0, 0): 3,
-        (5, 0): 3,
-        (2, 2): 2,
-        (6, 2): 3,
-        (0, 4): 3,
-        (7, 5): 2,
-        (2, 6): 3,
-        (6, 7): 3,
-        (1, 9): 3,
-        (5, 9): 3,
-    }
-
+def test_get_number():
     parsed_data = gear_ratios.parse_data_as_dict(data)
-    print(expected)
+
+    for num, expected in zip(data_sizes, all_numbers):
+        assert gear_ratios.get_number(num, data_sizes.get(num), parsed_data) == expected
+
+
+def test_get_all_numbers_with_size():
+    parsed_data = gear_ratios.parse_data_as_dict(data)
     num_with_size = gear_ratios.get_all_numbers_with_size(parsed_data)
-    print(num_with_size)
-    assert num_with_size == expected
+    assert num_with_size == data_sizes

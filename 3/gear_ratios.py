@@ -20,7 +20,7 @@ def parse_data_as_dict(data: str) -> dict:
     return table
 
 
-def get_all_num_positions(table: dict) -> tuple:
+def get_all_num_positions(table: dict) -> tuple[int, int]:
     for i in table:
         if table[i].isnumeric():
             yield i
@@ -30,22 +30,32 @@ def get_number_len(position: tuple[int, int], table: dict) -> int:
     len = 0
     # iterate on the line and check if the char is int, increase len
     # if we find something else return the len because the nulmber has ended
-    while table.setdefault((position[0] + len, position[1]), ".").isnumeric():
-        len += 1
+    try:
+        while table.get((position[0] + len, position[1])).isnumeric():
+            len += 1
+    except AttributeError:
+        print(f"lol {len}")
     return len
 
 
 def get_all_numbers_with_size(table: dict) -> dict[tuple[int, int], int]:
-    plop = {}
+    nums_with_size = {}
     all_nums = iter(get_all_num_positions(table))
     for num in all_nums:
         size = get_number_len(num, table)
         print(num, table.get(num), size)
         for _ in range(1, size):
             next(all_nums)
-        plop[num] = size
+        nums_with_size[num] = size
 
-    return plop
+    return nums_with_size
+
+
+def get_number(position: tuple[int, int], size: int, table: dict) -> int:
+    number = ""
+    for i in range(size):
+        number += str(table.get((position[0] + i, position[1])))
+    return int(number)
 
 
 def extract_surroundings(position: tuple, len: int, table: dict) -> str:
@@ -68,6 +78,19 @@ def is_part_number(surrounding: str) -> bool:
 if __name__ == "__main__":
     with open("3/input.txt", "r") as f:
         data = f.read()
-    plop = parse_data_as_dict(data)
-    for i in get_all_num_positions(plop):
-        print(i, plop[i])
+    parsed_data = parse_data_as_dict(data)
+
+    # get all nums before we sort and extract part nums
+    all_nums = get_all_numbers_with_size(parsed_data)
+
+    # extract only part nums
+    result = 0
+    for num in all_nums:
+        num_size = get_number_len(num, parsed_data)
+        if is_part_number(extract_surroundings(num, num_size, parsed_data)):
+            part_num = get_number(num, num_size, parsed_data)
+            print(part_num)
+
+            result += part_num
+
+    print(f"Result 1: {result}")
