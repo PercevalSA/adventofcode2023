@@ -13,6 +13,15 @@ def parse_data(data: str) -> list:
     return result
 
 
+def count_wins(card: list[list]) -> int:
+    wins = 0
+    for number in card[1]:
+        if number in card[0]:
+            wins += 1
+
+    return wins
+
+
 def solve_part_1(data: list):
     return data
 
