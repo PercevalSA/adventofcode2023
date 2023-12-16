@@ -2,11 +2,19 @@
 
 
 def parse_data(data: str) -> list:
-    return [line for line in data.splitlines()]
+    result = []
+    for line in data.splitlines():
+        winning_numbers_str, numnbers_str = line.split(":")[1].split("|")
+        winning_numbers = [int(i) for i in winning_numbers_str.strip().split()]
+        numbers = [int(i) for i in numnbers_str.strip().split()]
+
+        result.append([winning_numbers, numbers])
+
+    return result
 
 
-def solve_part_1(data):
-    return True
+def solve_part_1(data: list):
+    return data
 
 
 def main(file: str):
