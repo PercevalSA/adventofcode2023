@@ -69,12 +69,21 @@ def get_all_num_positions(table: dict) -> list[str]:
             yield i
 
 
+def get_number_len(position: tuple[int, int], table: dict) -> int:
+    len = 0
+    # iterate on the line and check if the char is int, increase len
+    # if we find something else return the len because the nulmber has ended
+    while table.get((position[0] + len, position[1])).isnumeric():
+        len += 1
+    return len
+
+
 def is_part_number(position: int) -> bool:
     return False
 
 
 if __name__ == "__main__":
-    with open("input.txt", "r") as f:
+    with open("3/input.txt", "r") as f:
         data = f.read()
     plop = parse_data_as_dict(data)
     for i in get_all_num_positions(plop):
