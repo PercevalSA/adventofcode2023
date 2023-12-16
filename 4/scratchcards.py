@@ -22,6 +22,13 @@ def count_wins(card: list[list]) -> int:
     return wins
 
 
+def card_score(wins: int) -> int:
+    if wins >= 2:
+        return 2 ** (wins - 1)
+    else:
+        return wins
+
+
 def solve_part_1(data: list):
     return data
 

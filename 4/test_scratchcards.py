@@ -11,6 +11,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"""
 
 
 wins = [4, 2, 2, 1, 0, 0]
+scores = [2, 2, 1, 0, 0]
 
 
 def test_parse_data():
@@ -24,3 +25,12 @@ def test_count_wins():
     parsed_data = scratchcards.parse_data(input)
     for line, win in zip(parsed_data, wins):
         assert scratchcards.count_wins(line) == win
+
+
+def test_scores():
+    assert scratchcards.card_score(0) == 0
+    assert scratchcards.card_score(1) == 1
+    assert scratchcards.card_score(2) == 2
+    assert scratchcards.card_score(3) == 4
+    assert scratchcards.card_score(4) == 8
+    assert scratchcards.card_score(5) == 16
