@@ -57,7 +57,7 @@ def get_game_number(game: str) -> int:
 
 
 def minimum_cubes_needed(game: dict) -> dict:
-    """ find the maximum of cube per color for a given game, 
+    """find the maximum of cube per color for a given game,
     that's the minimum of cubes needed
     """
     maximum = {"blue": 0, "green": 0, "red": 0}
@@ -66,15 +66,17 @@ def minimum_cubes_needed(game: dict) -> dict:
         for color in draw:
             if draw[color] > maximum[color]:
                 maximum[color] = draw[color]
-    
+
     return maximum
 
+
 def get_cube_power(draw: dict) -> int:
-    """ return the number of cubes in a draw """
+    """return the number of cubes in a draw"""
     return functools.reduce(operator.mul, draw.values(), 1)
 
+
 if __name__ == "__main__":
-    with open("input.txt", "r") as f:
+    with open("2/input.txt", "r") as f:
         data = f.readlines()
     games = parse_input(data)
 
