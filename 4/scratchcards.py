@@ -30,7 +30,11 @@ def card_score(wins: int) -> int:
 
 
 def solve_part_1(data: list):
-    return data
+    score = 0
+    for card in data:
+        score += card_score(count_wins(card))
+
+    return score
 
 
 def main(file: str):
