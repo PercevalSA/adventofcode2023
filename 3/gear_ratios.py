@@ -34,7 +34,7 @@ def get_number_len(position: tuple[int, int], table: dict) -> int:
         while table.get((position[0] + len, position[1])).isnumeric():
             len += 1
     except AttributeError:
-        print(f"lol {len}")
+        pass
     return len
 
 
@@ -43,7 +43,6 @@ def get_all_numbers_with_size(table: dict) -> dict[tuple[int, int], int]:
     all_nums = iter(get_all_num_positions(table))
     for num in all_nums:
         size = get_number_len(num, table)
-        print(num, table.get(num), size)
         for _ in range(1, size):
             next(all_nums)
         nums_with_size[num] = size
@@ -75,8 +74,8 @@ def is_part_number(surrounding: str) -> bool:
     return False
 
 
-if __name__ == "__main__":
-    with open("3/input.txt", "r") as f:
+def main(file: str):
+    with open(file, "r") as f:
         data = f.read()
     parsed_data = parse_data_as_dict(data)
 
@@ -88,9 +87,11 @@ if __name__ == "__main__":
     for num in all_nums:
         num_size = get_number_len(num, parsed_data)
         if is_part_number(extract_surroundings(num, num_size, parsed_data)):
-            part_num = get_number(num, num_size, parsed_data)
-            print(part_num)
-
-            result += part_num
+            result += get_number(num, num_size, parsed_data)
 
     print(f"Result 1: {result}")
+    return result
+
+
+if __name__ == "__main__":
+    main("3/input.txt")
