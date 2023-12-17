@@ -55,12 +55,9 @@ def generate_originals_and_copies_indexes(data: list) -> list[int]:
     return all_cards_indexes
 
 
-def count_points_from_indexes_list(data: list[int]) -> int:
-    return 0
-
-
 def solve_part_2(data: list) -> int:
-    return 0
+    # how many total scratchcards do you end up with?
+    return len(generate_originals_and_copies_indexes(data))
 
 
 def main(file: str):
@@ -70,6 +67,9 @@ def main(file: str):
 
     result = solve_part_1(parsed_data)
     print(f"Result 1: {result}")
+
+    result = solve_part_2(parsed_data)
+    print(f"Result 2: {result}")
 
 
 if __name__ == "__main__":
