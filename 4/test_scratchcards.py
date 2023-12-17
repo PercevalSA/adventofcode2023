@@ -34,3 +34,20 @@ def test_scores():
     assert scratchcards.card_score(3) == 4
     assert scratchcards.card_score(4) == 8
     assert scratchcards.card_score(5) == 16
+
+
+def test_get_winned_cards():
+    parsed_data = scratchcards.parse_data(input)
+    print(parsed_data)
+    # Card 1 has four matching numbers,
+    # so you win one copy each of the next four cards: cards 2, 3, 4, and 5.
+    assert scratchcards.get_winned_cards(parsed_data[0], 0, len(parsed_data)) == [
+        1,
+        2,
+        3,
+        4,
+    ]
+    assert scratchcards.get_winned_cards(parsed_data[0], 0, 3) == [1, 2, 3]
+    assert scratchcards.get_winned_cards(parsed_data[1], 1, len(parsed_data)) == [2, 3]
+    assert scratchcards.get_winned_cards(parsed_data[5], 5, len(parsed_data)) == []
+    assert scratchcards.get_winned_cards(parsed_data[4], 4, len(parsed_data)) == []

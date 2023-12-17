@@ -38,15 +38,22 @@ def solve_part_1(data: list):
 
 
 # part 2
-def get_winned_cards(card: list, index: int) -> list[int]:
+def get_winned_cards(card: list, index: int, max_id: int) -> list[int]:
     wins = count_wins(card)
-    return [index + i for i in range(1, wins)]
+    return [index + i for i in range(1, wins + 1) if index + i <= max_id]
+
+
+def generate_copy_cards_list(data: list) -> list:
+    # generates the list of all cards: original + copy to be processeced after
+    all_cards = []
+    max = len(data)
+    for index, card in enumerate(data):
+        get_winned_cards(card, index, max)
+
+    return all_cards
 
 
 def solve_part_2(data: list) -> int:
-    for i, card in iterate(data):
-        print(get_winned_cards(card, i))
-
     return 0
 
 
