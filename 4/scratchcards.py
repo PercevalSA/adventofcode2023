@@ -43,14 +43,20 @@ def get_winned_cards(card: list, index: int, max_id: int) -> list[int]:
     return [index + i for i in range(1, wins + 1) if index + i <= max_id]
 
 
-def generate_copy_cards_list(data: list) -> list:
+def generate_originals_and_copies_indexes(data: list) -> list[int]:
     # generates the list of all cards: original + copy to be processeced after
-    all_cards = []
+    # we only generates indexes to spare memory
     max = len(data)
-    for index, card in enumerate(data):
-        get_winned_cards(card, index, max)
+    all_cards_indexes: list[int] = [i for i in range(max)]
+    for index in all_cards_indexes:
+        for win in get_winned_cards(data[index], index, max):
+            all_cards_indexes.append(win)
 
-    return all_cards
+    return all_cards_indexes
+
+
+def count_points_from_indexes_list(data: list[int]) -> int:
+    return 0
 
 
 def solve_part_2(data: list) -> int:
