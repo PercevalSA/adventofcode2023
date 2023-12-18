@@ -42,6 +42,7 @@ Seed 13, soil 13, fertilizer 52, water 41, light 34, temperature 34, humidity 35
 """
 expected = [82, 43, 86, 35]
 
+
 def test_parse_data():
     sf = seed_fertilizer.FieldAnalyzer(data)
     assert sf.data["seed-to-soil"][98] == 50
@@ -55,6 +56,18 @@ def test_parse_data():
     assert sf.data["fertilizer-to-water"][52] == 41
 
 
+def test_resolver():
+    sf = seed_fertilizer.FieldAnalyzer(data)
+
+    assert sf.resolver("fertilizer-to-water", 53) == 49
+    assert sf.resolver("fertilizer-to-water", 60) == 56
+    assert sf.resolver("fertilizer-to-water", 11) == 0
+    assert sf.resolver("fertilizer-to-water", 52) == 41
+
+    assert sf.resolver("fertilizer-to-water", 53) == 49
+    assert sf.resolver("fertilizer-to-water", 60) == 56
+    assert sf.resolver("fertilizer-to-water", 11) == 0
+    assert sf.resolver("fertilizer-to-water", 52) == 41
 
 def test_find_location():
     sf = seed_fertilizer.FieldAnalyzer(data)
