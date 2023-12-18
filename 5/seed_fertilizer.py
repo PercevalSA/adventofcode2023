@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 
-from collections import defaultdict 
-
-
 # we can use defaultdict to generat missing part as it is only int to int correspondances
 # default dict does not take any argument to generate missing parts we need our own dict type
 class MyDict(dict):
@@ -38,11 +35,11 @@ class FieldAnalyzer:
     def _parse_block(self, block: str) -> tuple:
         block_name, block_content = block.split(":")
         if block_name == "seeds":
-            block_content = block_content.strip().split()
+            block_content = [int(i) for i in block_content.strip().split()]
         else:
             block_content = self._parse_numbers(block_content.strip())
 
-        print("block", block_name, block_content)
+        # print("block", block_name, block_content)
         return block_name.split()[0], block_content
 
     def _parse_data(self, data: str) -> dict:
@@ -57,16 +54,22 @@ class FieldAnalyzer:
         return parsed_data
 
 
-    def solve_part_1(self) -> int:
-        return 0
+    def seed_to_location(self) -> list[int]:
+        result = []
+        for s in self._data["seeds"]:
+            location = self._data["humidity-to-location"][self._data["temperature-to-humidity"][self._data["light-to-temperature"][self._data["water-to-light"][self._data["fertilizer-to-water"][self._data["soil-to-fertilizer"][self._data["seed-to-soil"][s]]]]]]]
+            result.append(location)
+        return result
+
 
 def main(file: str):
     with open(file, "r") as f:
         data = f.read()
 
-    filed_analyzer = FieldAnalyzer(data)
+    field_analyzer = FieldAnalyzer(data)
+    locations = field_analyzer.seed_to_location()
+    result = min(locations)
 
-    result = filed_analyzer.solve_part_1()
     print(f"Result 1: {result}")
 
 
