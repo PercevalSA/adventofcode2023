@@ -26,20 +26,24 @@ class FieldAnalyzer:
         del self._data
 
 
-    def _parse_numbers(self, data: str) -> dict[int, int]:
+    def _parse_numbers(self, table: str) -> dict[int, int]:
         correspondance = MyDict()
-        for line in data.splitlines():
+        for line in table.split('\n'):
             dest, src, ran = line.split()
             for i in range(int(ran)):
                 correspondance[int(src) + i] = int(dest) + i
 
         return correspondance
 
-    def _parse_block(self, data: str) -> tuple:
-        data_name, data_content = data.split(":")
-        data_content = self._parse_numbers(data_content)
+    def _parse_block(self, block: str) -> tuple:
+        block_name, block_content = block.split(":")
+        if block_name == "seeds":
+            block_content = block_content.strip().split()
+        else:
+            block_content = self._parse_numbers(block_content.strip())
 
-        return data_name, data_content
+        print("block", block_name, block_content)
+        return block_name.split()[0], block_content
 
     def _parse_data(self, data: str) -> dict:
         """each block is seperated by a line gap, then a title followed by:
@@ -48,7 +52,7 @@ class FieldAnalyzer:
         # split by block before parsing each data
         for block in data.split("\n\n"):
             data_name, data_content = self._parse_block(block)
-            parsed_data[data_name] = [data_content]
+            parsed_data[data_name] = data_content
 
         return parsed_data
 
