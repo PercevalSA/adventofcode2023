@@ -11,6 +11,14 @@ def distance_from_button_pressed_time(button_time: int, total_time: int) -> int:
     return sailed_distance
 
 
+# we assume that the results are somehow gaussian
+def find_button_time(total_time: int, distance_to_beat: int):
+    for i in range(total_time):
+        if distance_from_button_pressed_time(i, total_time) > distance_to_beat:
+            return i
+
+def find_minimum_button_time(race: tuple[int, int]):
+    find_button_time(race[0], race[1])
 
 # one full millisecond hold = one millimeter per millisecond
 def main(file: str):
