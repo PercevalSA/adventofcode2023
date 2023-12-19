@@ -12,7 +12,12 @@ def test_parser():
 
 def test_minimum():
     data = waitforit.parse_input(input)
+    assert waitforit.find_minimum_button_time(data[0]) == 2
+    assert waitforit.find_minimum_button_time(data[1]) == 4
+    assert waitforit.find_minimum_button_time(data[2]) == 11
 
-    waitforit.find_minimum_button_time(data[0]) == 5
-    waitforit.find_minimum_button_time(data[1]) == 4
-    waitforit.find_minimum_button_time(data[2]) == 11
+def test_maximum():
+    data = waitforit.parse_input(input)
+    assert waitforit.find_maximum_button_time(data[0]) == 5
+    assert waitforit.find_maximum_button_time(data[1]) == 11
+    assert waitforit.find_maximum_button_time(data[2]) == 19
