@@ -38,6 +38,9 @@ def solve_part_1(data: list):
         result = result * count_ways_to_solve(race)
     return result
 
+def solve_part_2(data: tuple):
+    return count_ways_to_solve(data)
+
 
 # one full millisecond hold = one millimeter per millisecond
 def main(file: str):
@@ -49,6 +52,8 @@ def main(file: str):
     print(f"Result 1: {result}")
 
     parsed_data = parse_part_2(data)
+    result = solve_part_2(parsed_data)
+    print(f"Result 2: {result}")
 
 
 if __name__ == "__main__":
