@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 
+
 def parse_input(data: str) -> list:
     return data.splitlines()
 
 
 def solve_part_1(data: list):
     return 0
+
 
 def main(file: str):
     with open(file, "r") as f:

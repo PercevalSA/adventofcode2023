@@ -35,7 +35,7 @@ class FieldAnalyzer:
 
         return number
 
-    def _parse_numbers(self, table: str) -> list[tuple]:
+    def _parse_numbers(self, table: str) -> list[tuple[int, int, int]]:
         correspondance = []
         for line in table.split("\n"):
             dest, src, ran = line.split()

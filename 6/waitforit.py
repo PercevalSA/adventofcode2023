@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 
+
 def parse_input(data: str) -> list[tuple[int, int]]:
     times, distances = [line.split()[1:] for line in data.splitlines()]
     return [(int(t), int(d)) for t, d in zip(times, distances)]
 
-def parse_part_2(data: str) -> tuple[int,int]:
+
+def parse_part_2(data: str) -> tuple[int, int]:
     time, distance = ["".join(line.split()[1:]) for line in data.splitlines()]
     return (int(time), int(distance))
 
+
 def distance_from_button_pressed_time(button_time: int, total_time: int) -> int:
     sailing_time = total_time - button_time
-    sailed_distance = sailing_time * button_time # button time is speed
+    sailed_distance = sailing_time * button_time  # button time is speed
     return sailed_distance
 
 
@@ -38,6 +41,7 @@ def solve_part_1(data: list):
         result = result * count_ways_to_solve(race)
     return result
 
+
 def solve_part_2(data: tuple):
     return count_ways_to_solve(data)
 
@@ -48,12 +52,12 @@ def main(file: str):
         data = f.read()
 
     parsed_data = parse_input(data)
-    result = solve_part_1(parsed_data)
-    print(f"Result 1: {result}")
+    result_1 = solve_part_1(parsed_data)
+    print(f"Result 1: {result_1}")
 
     parsed_data = parse_part_2(data)
-    result = solve_part_2(parsed_data)
-    print(f"Result 2: {result}")
+    result_2 = solve_part_2(parsed_data)
+    print(f"Result 2: {result_2}")
 
 
 if __name__ == "__main__":

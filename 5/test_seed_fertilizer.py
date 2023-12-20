@@ -69,6 +69,7 @@ def test_resolver():
     assert sf.resolver("fertilizer-to-water", 11) == 0
     assert sf.resolver("fertilizer-to-water", 52) == 41
 
+
 def test_find_location():
     sf = seed_fertilizer.FieldAnalyzer(data)
     result = sf.seed_to_location()

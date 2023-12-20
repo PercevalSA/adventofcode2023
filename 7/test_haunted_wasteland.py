@@ -1,4 +1,3 @@
-
 data = """RL
 
 AAA = (BBB, CCC)
