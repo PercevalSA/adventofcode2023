@@ -17,19 +17,34 @@ strength_order = {
 }
 
 
-def is_5_of_kind(hand: str) -> bool:
-    """Five of a kind, where all five cards have the same label: AAAAA"""
-    cards = list(hand)
-    for i in range(len(cards) - 1):
-        if cards[i] != cards[i + 1]:
+def are_all_the_same_lst(items: list[str]) -> bool:
+    for i in range(len(items) - 1):
+        if items[i] != items[i + 1]:
             return False
     return True
+
+
+def are_all_the_same_str(items: str) -> bool:
+    return are_all_the_same_lst(list(items))
+
+
+def is_5_of_kind(hand: str) -> bool:
+    """Five of a kind, where all five cards have the same label: AAAAA"""
+    return are_all_the_same_str(hand)
 
 
 def is_4_of_kind(hand: str) -> bool:
     """Four of a kind, where four cards have the same label
     and one card has a different label: AA8AA
     """
+    cards = list(hand).sort()
+    if (
+        are_all_the_same_lst(cards[1:-2])
+        and cards[0] == cards[1]
+        or cards[-1] == cards[-2]
+    ):
+        return True
+
     return False
 
 
