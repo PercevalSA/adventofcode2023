@@ -113,7 +113,8 @@ def is_high_card(hand: str) -> bool:
 
 
 def parse_input(data: str) -> list:
-    return data.splitlines()
+    lines = data.splitlines()
+    return [line.split() for line in lines]
 
 
 def solve_part_1(data: list):

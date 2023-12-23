@@ -7,6 +7,16 @@ KTJJT 220
 QQQJA 483"""
 
 
+def test_parse():
+    parsed = camel_cards.parse_input(data)
+
+    assert parsed[0][0] == "32T3K"
+    assert parsed[0][1] == "765"
+    assert parsed[-1][0] == "QQQJA"
+    assert parsed[-1][1] == "483"
+    assert len(parsed) == 5
+
+
 def test_is_5_of_kind():
     assert camel_cards.is_5_of_kind("AAAAA") is True
     assert camel_cards.is_5_of_kind("33344") is False
