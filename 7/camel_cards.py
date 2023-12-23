@@ -131,6 +131,16 @@ def hand_type(hand: str) -> int:
     return 0
 
 
+def is_hand_1_stronger(hand_1: str, hand_2: str):
+    for i, j in zip(hand_1, hand_2):
+        if i > j:
+            return True
+        if i < j:
+            return False
+        if i == j:
+            pass
+
+
 def parse_input(data: str) -> list:
     lines = data.splitlines()
     return [line.split() for line in lines]
