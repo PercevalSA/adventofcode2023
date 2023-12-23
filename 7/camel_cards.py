@@ -37,11 +37,10 @@ def is_4_of_kind(hand: str) -> bool:
     """Four of a kind, where four cards have the same label
     and one card has a different label: AA8AA
     """
-    cards = list(hand).sort()
-    if (
-        are_all_the_same_lst(cards[1:-2])
-        and cards[0] == cards[1]
-        or cards[-1] == cards[-2]
+    cards: list[str] = list(hand)
+    cards.sort()
+    if are_all_the_same_lst(cards[1:-1]) and (
+        cards[0] == cards[1] or cards[-1] == cards[-2]
     ):
         return True
 
@@ -52,6 +51,14 @@ def is_full_house(hand: str) -> bool:
     """Full house, where three cards have the same label,
     and the remaining two cards share a different label: 23332
     """
+    cards: list[str] = list(hand)
+    cards.sort()
+
+    if (cards[0] == cards[1] == cards[2] and cards[-1] == cards[-2]) or (
+        cards[0] == cards[1] and cards[-1] == cards[-2] == cards[-3]
+    ):
+        return True
+
     return False
 
 
@@ -60,6 +67,10 @@ def is_3_of_kind(hand: str) -> bool:
     and the remaining two cards are each different
     from any other card in the hand: TTT98
     """
+    for char in hand:
+        if hand.count(char) == 3:
+            return True
+
     return False
 
 
@@ -68,6 +79,11 @@ def is_2_pairs(hand: str) -> bool:
     two other cards share a second label,
     and the remaining card has a third label: 23432
     """
+    for i in hand:
+        if hand.count(i) == 2:
+            for j in hand:
+                if i != j and hand.count(j) == 2:
+                    return True
     return False
 
 
@@ -76,12 +92,24 @@ def is_1_pair(hand: str) -> bool:
     and the other three cards have a different label
     from the pair and each other: A23A4
     """
+    for i in hand:
+        if hand.count(i) == 2:
+            return True
+            # as we tested everything before this is not mandatory
+            # hand.replace(i, "")
+            # if hand[0] != hand[1] != hand[2]:
+            #     return True
+
     return False
 
 
 def is_high_card(hand: str) -> bool:
     """High card, where all cards' labels are distinct: 23456"""
-    return False
+    for char in hand:
+        if hand.count(char) != 1:
+            return False
+
+    return True
 
 
 def parse_input(data: str) -> list:
