@@ -93,3 +93,24 @@ def test_high_card():
     assert camel_cards.is_high_card("T234A") is True
     assert camel_cards.is_high_card("23456") is True
     assert camel_cards.is_high_card("4362A") is True
+
+
+def test_hand_type():
+    assert camel_cards.hand_type("A32AA") == 4
+    assert camel_cards.hand_type("A322A") == 3
+    assert camel_cards.hand_type("A332A") == 3
+    assert camel_cards.hand_type("AAAAA") == 7
+    assert camel_cards.hand_type("33343") == 6
+    assert camel_cards.hand_type("5TTTT") == 6
+    assert camel_cards.hand_type("TTTAA") == 5
+    assert camel_cards.hand_type("TTAAT") == 5
+    assert camel_cards.hand_type("33444") == 5
+    assert camel_cards.hand_type("44334") == 5
+    assert camel_cards.hand_type("A432A") == 2
+    assert camel_cards.hand_type("33343") == 6
+    assert camel_cards.hand_type("T34AA") == 2
+    assert camel_cards.hand_type("TTAAT") == 5
+    assert camel_cards.hand_type("T34AA") == 2
+    assert camel_cards.hand_type("T234A") == 1
+    assert camel_cards.hand_type("23456") == 1
+    assert camel_cards.hand_type("4362A") == 1

@@ -112,6 +112,25 @@ def is_high_card(hand: str) -> bool:
     return True
 
 
+def hand_type(hand: str) -> int:
+    if is_5_of_kind(hand):
+        return 7
+    if is_4_of_kind(hand):
+        return 6
+    if is_full_house(hand):
+        return 5
+    if is_3_of_kind(hand):
+        return 4
+    if is_2_pairs(hand):
+        return 3
+    if is_1_pair(hand):
+        return 2
+    if is_high_card(hand):
+        return 1
+
+    return 0
+
+
 def parse_input(data: str) -> list:
     lines = data.splitlines()
     return [line.split() for line in lines]
