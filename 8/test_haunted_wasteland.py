@@ -27,14 +27,14 @@ def test_parse_node():
 def test_parse():
     parsed = haunted_wasteland.parse_input(data_2)
 
-    assert parsed[0] == "AAA"
-    assert parsed[1] == "LLR"
-    assert parsed[2]["AAA"] == ("BBB", "BBB")
-    assert parsed[2]["BBB"] == ("AAA", "ZZZ")
+    assert parsed[0] == "LLR"
+    assert parsed[1]["AAA"] == ("BBB", "BBB")
+    assert parsed[1]["BBB"] == ("AAA", "ZZZ")
 
 
 def test_iterate_instructions():
-    start, instructions, map = haunted_wasteland.parse_input(data_2)
+    instructions, map = haunted_wasteland.parse_input(data_1)
+    assert haunted_wasteland.iterate_instructions(instructions, map, "AAA", "ZZZ") == 2
 
-    result = haunted_wasteland.iterate_instructions(instructions, map, start, "ZZZ")
-    assert result == 6
+    instructions, map = haunted_wasteland.parse_input(data_2)
+    assert haunted_wasteland.iterate_instructions(instructions, map, "AAA", "ZZZ") == 6

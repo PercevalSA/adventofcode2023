@@ -14,19 +14,17 @@ def parse_node(node: str) -> tuple[str, tuple[str, str]]:
     return item.strip(), dirs
 
 
-def parse_input(data: str) -> tuple[str, str, dict]:
+def parse_input(data: str) -> tuple[str, dict]:
     parsed = data.splitlines()
     instructions = parsed.pop(0)
     parsed.pop(0)  # empty line
-
-    start: str = parsed[0][0:3]
 
     map = {}
     for line in parsed:
         item, directions = parse_node(line)
         map[item] = directions
 
-    return start, instructions, map
+    return instructions, map
 
 
 def iterate_instructions(instructions: str, map: dict, start: str, destination: str):
@@ -46,16 +44,16 @@ def iterate_instructions(instructions: str, map: dict, start: str, destination: 
     return step
 
 
-def solve_part_1(data: list) -> int:
-    return 0
+def solve_part_1(data: str) -> int:
+    instructions, map = parse_input(data)
+    return iterate_instructions(instructions, map, "AAA", "ZZZ")
 
 
 def main(file: str):
     with open(file, "r") as f:
         data = f.read()
 
-    parsed_data = parse_input(data)
-    result = solve_part_1(parsed_data)
+    result = solve_part_1(data)
     print(f"Result 1: {result}")
 
 
