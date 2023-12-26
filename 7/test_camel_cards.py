@@ -1,3 +1,5 @@
+import functools
+
 import camel_cards
 
 data = """32T3K 765
@@ -114,3 +116,40 @@ def test_hand_type():
     assert camel_cards.hand_type("T234A") == 1
     assert camel_cards.hand_type("23456") == 1
     assert camel_cards.hand_type("4362A") == 1
+
+
+def test_compare_same_type_hands():
+    assert camel_cards.compare_same_type_hands("A32AA", "A322A") == 1
+    assert camel_cards.compare_same_type_hands("TTTAA", "TTAAT") == -1
+    assert camel_cards.compare_same_type_hands("TTAAT", "TTTAA") == 1
+    assert camel_cards.compare_same_type_hands("T234A", "T234A") == 0
+    assert camel_cards.compare_same_type_hands("33444", "44334") == -1
+    assert camel_cards.compare_same_type_hands("T234A", "A432A") == -1
+
+
+def test_compare_hands():
+    assert camel_cards.compare_same_type_hands("A32AA", "A322A") == 1
+    assert camel_cards.compare_same_type_hands("TTTAA", "TTAAT") == -1
+    assert camel_cards.compare_same_type_hands("TTAAT", "TTTAA") == 1
+    assert camel_cards.compare_same_type_hands("T234A", "T234A") == 0
+    assert camel_cards.compare_same_type_hands("33444", "44334") == -1
+    assert camel_cards.compare_same_type_hands("T234A", "A432A") == -1
+    assert camel_cards.compare_same_type_hands("A432A", "T234A") == 1
+    assert camel_cards.compare_same_type_hands("AAAAA", "33343") == 1
+    assert camel_cards.compare_same_type_hands("4362A", "A432A") == -1
+
+
+def test_compare_bets():
+    parsed = camel_cards.parse_input(data)
+    parsed.sort(key=functools.cmp_to_key(camel_cards.compare_bets))
+    assert parsed[0][0] == "32T3K"
+    assert parsed[1][0] == "KTJJT"
+    assert parsed[2][0] == "KK677"
+    assert parsed[3][0] == "T55J5"
+    assert parsed[4][0] == "QQQJA"
+
+
+def test_calculate_score():
+    parsed = camel_cards.parse_input(data)
+    parsed.sort(key=functools.cmp_to_key(camel_cards.compare_bets))
+    assert camel_cards.calculate_score(parsed) == 6440

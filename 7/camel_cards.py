@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import functools
+
 strength_order = {
     "A": 13,
     "K": 12,
@@ -131,14 +133,44 @@ def hand_type(hand: str) -> int:
     return 0
 
 
-def is_hand_1_stronger(hand_1: str, hand_2: str):
+# to be used nativley by python it must return an int
+def compare_same_type_hands(hand_1: str, hand_2: str) -> int:
     for i, j in zip(hand_1, hand_2):
-        if i > j:
-            return True
-        if i < j:
-            return False
-        if i == j:
+        ii = strength_order[i]
+        jj = strength_order[j]
+        if ii < jj:
+            return -1
+        if ii > jj:
+            return 1
+        if ii == jj:
             pass
+
+    return 0
+
+
+def compare_hands(hand_1: str, hand_2: str) -> int:
+    hand_1_type = hand_type(hand_1)
+    hand_2_type = hand_type(hand_2)
+
+    if hand_1_type < hand_2_type:
+        return -1
+    if hand_1_type > hand_2_type:
+        return 1
+
+    # hand_1_type == hand_2_type
+    return compare_same_type_hands(hand_1, hand_2)
+
+
+def compare_bets(item1, item2):
+    return compare_hands(item1[0], item2[0])
+
+
+def calculate_score(bids: list):
+    result = 0
+    for it, bid in enumerate(bids):
+        result += (it + 1) * int(bid[1])
+
+    return result
 
 
 def parse_input(data: str) -> list:
@@ -147,6 +179,7 @@ def parse_input(data: str) -> list:
 
 
 def solve_part_1(data: list):
+    data.sort(key=functools.cmp_to_key(compare_bets))
     return 0
 
 
