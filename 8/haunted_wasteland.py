@@ -32,15 +32,11 @@ def iterate_instructions(instructions: str, map: dict, start: str, destination: 
     location = start
     step = 0
 
-    print("start:", location)
     while location != destination:
         move_to = next(iterator)
-        print("move to:", move_to)
         location = map[location][direction[move_to]]
-        print("location :", location)
         step += 1
 
-    print(step)
     return step
 
 
