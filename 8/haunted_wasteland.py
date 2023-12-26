@@ -1,8 +1,26 @@
 #!/usr/bin/python3
 
 
-def parse_input(data: str) -> list:
-    return []
+# parse str like AAA = (BBB, CCC)
+# left is 0 and right 1 in tuple
+def parse_node(node: str) -> tuple[str, tuple[str, str]]:
+    item, directions = node.split("=")
+    directions = directions.strip()
+    dirs = (directions[1:4], directions[-4:-1])  # get only letters
+    return item.strip(), dirs
+
+
+def parse_input(data: str) -> tuple[str, dict]:
+    parsed = data.splitlines()
+    instructions = parsed.pop(0)
+    parsed.pop(0)  # empty line
+
+    map = {}
+    for line in parsed:
+        item, directions = parse_node(line)
+        map[item] = directions
+
+    return instructions, map
 
 
 def solve_part_1(data: list) -> int:
