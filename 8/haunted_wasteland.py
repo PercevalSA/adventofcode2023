@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import math
 from itertools import cycle
 
 direction = {"L": 0, "R": 1}
@@ -49,26 +50,41 @@ def get_all_starting_locations(map: dict) -> list[str]:
     return [k for k in map.keys() if k[-1] == "A"]
 
 
-def all_end_points_reached(locations: list[str]) -> bool:
-    for local in locations:
-        if local[-1] != "Z":
-            return False
-    return True
-
-
 def solve_part_2(data: str) -> int:
     instructions, map = parse_input(data)
     iterator = cycle(instructions)
     locations = get_all_starting_locations(map)
     step = 0
 
-    while not all_end_points_reached(locations):
+    while not all([item[-1] == "Z" for item in locations]):
         move_to = next(iterator)
-        for local in locations:
-            local = map[local][direction[move_to]]
+        for i in range(len(locations)):
+            locations[i] = map[locations[i]][direction[move_to]]
         step += 1
-
+    print(locations)
     return step
+
+
+def try_part_2(data: str) -> int:
+    instructions, map = parse_input(data)
+    locations = get_all_starting_locations(map)
+
+    steps: list[int] = []
+    for start in locations:
+        local = start
+        print(local)
+        iterator = cycle(instructions)
+        step = 0
+
+        while not local[-1] == "Z":
+            move_to = next(iterator)
+            local = map[local][direction[move_to]]
+            step += 1
+        print(local)
+        print(step)
+        steps.append(step)
+
+    return math.lcm(*steps)
 
 
 def main(file: str):
@@ -78,8 +94,8 @@ def main(file: str):
     result = solve_part_1(data)
     print(f"Result 1: {result}")
 
-    result = solve_part_2(data)
-    print(f"Result 2: {result}")
+    result = try_part_2(data)
+    print(f"TRY 2: {result}")
 
 
 if __name__ == "__main__":

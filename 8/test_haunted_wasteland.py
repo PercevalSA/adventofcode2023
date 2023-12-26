@@ -38,3 +38,19 @@ def test_iterate_instructions():
 
     instructions, map = haunted_wasteland.parse_input(data_2)
     assert haunted_wasteland.iterate_instructions(instructions, map, "AAA", "ZZZ") == 6
+
+
+data_part_2 = """LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)"""
+
+
+def test_solve_part_2():
+    assert haunted_wasteland.solve_part_2(data_part_2) == 6
