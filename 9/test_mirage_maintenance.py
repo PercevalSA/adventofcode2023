@@ -21,5 +21,21 @@ def test_get_steps():
     assert mirage_maintenance.get_steps([0, 3, 6, 9, 12, 15]) == [3, 3, 3, 3, 3]
 
 
+def test_all_steps():
+    assert mirage_maintenance.generate_all_steps([0, 3, 6, 9, 12, 15]) == [
+        [0, 3, 6, 9, 12, 15],
+        [3, 3, 3, 3, 3],
+        [0, 0, 0, 0],
+    ]
+
+    assert mirage_maintenance.generate_all_steps([10, 13, 16, 21, 30, 45]) == [
+        [10, 13, 16, 21, 30, 45],
+        [3, 3, 5, 9, 15],
+        [0, 2, 4, 6],
+        [2, 2, 2],
+        [0, 0],
+    ]
+
+
 def test_solve_part_1():
     assert mirage_maintenance.solve_part_1(data) == 114
