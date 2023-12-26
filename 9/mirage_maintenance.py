@@ -8,9 +8,7 @@ def parse_data(data: str) -> list[list[int]]:
 
 
 def get_steps(values: list[int]) -> list[int]:
-    plop = [values[i + 1] - values[i] for i in range(len(values) - 1)]
-    print(plop)
-    return plop
+    return [values[i + 1] - values[i] for i in range(len(values) - 1)]
 
 
 def generate_all_steps(values: list[int]) -> list[list[int]]:
@@ -22,15 +20,21 @@ def generate_all_steps(values: list[int]) -> list[list[int]]:
     return all_steps
 
 
-def solve_part_1(data: str) -> int:
-    return 0
+def get_predicate(values: list[list[int]]) -> int:
+    return sum(step[-1] for step in values)
+
+
+def solve_part_1(data: list[list[int]]) -> int:
+    return sum(get_predicate(generate_all_steps(measures)) for measures in data)
 
 
 def main(file: str):
     with open(file, "r") as f:
         data = f.read()
 
-    result = solve_part_1(data)
+    parsed = parse_data(data)
+
+    result = solve_part_1(parsed)
     print(f"Result 1: {result}")
 
 

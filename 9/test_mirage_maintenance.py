@@ -37,5 +37,12 @@ def test_all_steps():
     ]
 
 
+def test_get_predicate():
+    parsed = mirage_maintenance.parse_data(data)
+    for i in range(len(parsed)):
+        steps = mirage_maintenance.generate_all_steps(parsed[i])
+        assert mirage_maintenance.get_predicate(steps) == solutions[i]
+
+
 def test_solve_part_1():
     assert mirage_maintenance.solve_part_1(data) == 114
