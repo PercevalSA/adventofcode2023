@@ -84,6 +84,7 @@ def try_part_2(data: str) -> int:
         print(step)
         steps.append(step)
 
+    # python 3.9 minimum
     return math.lcm(*steps)
 
 
