@@ -180,7 +180,7 @@ def parse_input(data: str) -> list:
 
 def solve_part_1(data: list):
     data.sort(key=functools.cmp_to_key(compare_bets))
-    return 0
+    return calculate_score(data)
 
 
 def main(file: str):
