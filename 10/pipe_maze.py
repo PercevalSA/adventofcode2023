@@ -26,6 +26,8 @@ pipes = {
     "F": ["E", "S"],
     "J": ["N", "W"],
     "L": ["E", "N"],
+    ".": [],
+    "S": ["N", "E", "S", "W"],
 }
 
 
@@ -41,9 +43,11 @@ def get_oriented_edges(
 def purge_non_bidirectional_edges(graph: dict) -> dict:
     """Return a graph with only bidirectional edges"""
     for node in graph:
-        for edge in node.value():
-            if node not in graph[edge.value()]:
-                node.pop(edge)
+        for edge in graph[node]:
+            if edge not in graph:
+                continue  # drop non existing edges like negative positions
+            if node not in graph[edge]:
+                graph[node].pop(edge)
     return {}
 
 
@@ -73,7 +77,7 @@ def get_edges(node: tuple[int, int]) -> list[tuple[int, int]]:
 
 
 def parse_data(data: str) -> list[list[str]]:
-    return [line.split() for line in data.splitlines()]
+    return [list(line) for line in data.splitlines()]
 
 
 def solve_part_1(data: list[str]) -> int:
@@ -84,10 +88,11 @@ def main(file: str):
     with open(file, "r") as f:
         data = f.read()
 
-    parsed = parse_data(data)
+    print(build_graph(data))
+    # parsed = parse_data(data)
 
-    result = solve_part_1(parsed)
-    print(f"Result 1: {result}")
+    # result = solve_part_1(parsed)
+    # print(f"Result 1: {result}")
 
 
 if __name__ == "__main__":
