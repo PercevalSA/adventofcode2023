@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 from operator import add
 
+from .dijkstra import DijkstraSPF
+
 # method
 # we need to parse the graph which seems the most complicated part
 # then apply a shorter path algorithm which would be dijkstra. We can use a std lib algo
@@ -18,8 +20,13 @@ from operator import add
 # then apply dijkstra to find the shortest path
 
 # x,y movment to follow direction
-orientations = {"N": (0, -1), "E": (1, 0), "S": (0, 1), "W": (-1, 0)}
-pipes = {
+orientations: dict[str, tuple[int, int]] = {
+    "N": (0, -1),
+    "E": (1, 0),
+    "S": (0, 1),
+    "W": (-1, 0),
+}
+pipes: dict[str, list[str]] = {
     "-": ["E", "W"],
     "|": ["N", "S"],
     "7": ["S", "W"],
@@ -60,27 +67,37 @@ def build_oriented_graph(maze: list[list[str]]) -> dict:
     return graph
 
 
-def build_graph(data: str) -> dict:
-    return purge_non_bidirectional_edges(build_oriented_graph(parse_data(data)))
+def get_start(data: list[list[str]]) -> tuple[int, int]:
+    for y in range(len(data)):
+        for x in range(len(data[y])):
+            if data[y][x] == "S":
+                return (x, y)
+    return (0, 0)
 
 
-def dijkstra(
-    graph: dict, start: tuple[int, int], end: tuple[int, int]
-) -> list[tuple[int, int]]:
-    """Return the shortest path between start and end in graph"""
-    return []
-
-
-def get_edges(node: tuple[int, int]) -> list[tuple[int, int]]:
-    """Return the edges of a given node"""
-    return []
+def build_graph(data: list[list[str]]) -> dict:
+    return purge_non_bidirectional_edges(build_oriented_graph(data))
 
 
 def parse_data(data: str) -> list[list[str]]:
     return [list(line) for line in data.splitlines()]
 
 
-def solve_part_1(data: list[str]) -> int:
+def dijkstra(graph: dict, start: tuple[int, int]) -> DijkstraSPF:
+    """Return the shortest path between start and end in graph"""
+    return DijkstraSPF(graph, start)
+
+
+def get_further_point() -> tuple[int, int]:
+    # return dijkstra.get_distance(end)
+    return (0, 0)
+
+
+def solve_part_1(data: list[list[str]]) -> int:
+    graph = build_graph(data)
+    start = get_start(data)
+
+    dijkstra(graph, start)
     return 0
 
 
@@ -88,10 +105,9 @@ def main(file: str):
     with open(file, "r") as f:
         data = f.read()
 
-    print(build_graph(data))
-    # parsed = parse_data(data)
+    parsed = parse_data(data)
+    result = solve_part_1(parsed)
 
-    # result = solve_part_1(parsed)
     # print(f"Result 1: {result}")
 
 
