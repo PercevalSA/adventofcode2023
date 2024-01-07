@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from operator import add
 
-from .dijkstra import DijkstraSPF
+from dijkstra import DijkstraSPF
 
 # method
 # we need to parse the graph which seems the most complicated part
@@ -107,8 +107,7 @@ def main(file: str):
 
     parsed = parse_data(data)
     result = solve_part_1(parsed)
-
-    # print(f"Result 1: {result}")
+    print(f"Result 1: {result}")
 
 
 if __name__ == "__main__":
